@@ -35,4 +35,11 @@ class NoteListActivity : AppCompatActivity() {
         }
 
     }
+
+    /**Notify the ListView about the change made by adding a new note to the list*/
+    override fun onResume() {
+        super.onResume()
+        (listNotes.adapter as ArrayAdapter<NoteInfo>).notifyDataSetChanged()
+
+    }
 }

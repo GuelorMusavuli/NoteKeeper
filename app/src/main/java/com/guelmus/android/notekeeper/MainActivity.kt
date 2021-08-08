@@ -31,12 +31,19 @@ class MainActivity : AppCompatActivity() {
         courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = courseAdapter
 
-        //Retrieved back the note position from the extra within intent
+        //Get note position from the extra within intent, and if no note has been
+        // passed in the extra, then set the notePosition to position not set.
         notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
 
-        //if there is a notePosition, populate the views
-        if (notePosition != POSITION_NOT_SET)
+        //if there is a notePosition, populate the screen views
+        if (notePosition != POSITION_NOT_SET){
             displayNote()
+        }else{
+            //Create an empty new note and add it to Data Manager, and then set
+                // the position of the current note to the newly empty note created
+            DataManager.notes.add(NoteInfo())
+            notePosition = DataManager.notes.lastIndex
+        }
 
     }
     /** Populate views in the main activity with notes from  intent extra*/
@@ -100,6 +107,19 @@ class MainActivity : AppCompatActivity() {
 
         return super.onPrepareOptionsMenu(menu)
     }
+    /** Save persistent data or notes when user is no longer interacting with the activity*/
+    override fun onPause() {
+        super.onPause()
+        saveNote()
+    }
 
+    /**Save the notes from screen into the note list within DataManager*/
+    private fun saveNote() {
+        //Get current display note and bind views value with properties in the list
+        val note = DataManager.notes[notePosition]
+        note.noteTitle = textNoteTitle.text.toString()
+        note.noteContent= textNoteText.text.toString()
+        note.course = spinnerCourses.selectedItem as CourseInfo
+    }
 
 }
