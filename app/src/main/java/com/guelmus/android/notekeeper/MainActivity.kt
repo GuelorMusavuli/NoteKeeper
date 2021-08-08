@@ -2,7 +2,7 @@
 package com.guelmus.android.notekeeper
 
 import android.os.Bundle
-import android.provider.ContactsContract
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -31,9 +31,13 @@ class MainActivity : AppCompatActivity() {
         courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = courseAdapter
 
-        //Get note position from the extra within intent, and if no note has been
-        // passed in the extra, then set the notePosition to position not set.
-        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
+        /**
+         * Restore saved notePosition from instance state when the activity is destroyed and then recreated.
+         If it is the initial creation of the activity, get notePosition from intent extra,
+         and if no notePosition has been passed in the extra, then set the notePosition
+        to position not set.*/
+        notePosition = savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET)?:
+                intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET)
 
         //if there is a notePosition, populate the screen views
         if (notePosition != POSITION_NOT_SET){
@@ -46,6 +50,13 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    /**Save the instance state of notePosition when the activity is destroyed */
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putInt(NOTE_POSITION, notePosition)
+    }
+
     /** Populate views in the main activity with notes from  intent extra*/
     private fun displayNote() {
         //Get note corresponding to the notePosition and set the note's title and text
