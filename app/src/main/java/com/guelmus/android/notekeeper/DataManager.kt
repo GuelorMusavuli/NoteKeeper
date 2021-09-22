@@ -24,9 +24,7 @@ object DataManager {
      * the test-driven development testing technique, and return the index of that newly created note*/
     fun addNote(courseInfo: CourseInfo, noteTitle : String, noteContent:String) : Int {
 
-        //return a value that we fail the test, that is an index of -1 or an ArrayOutOfBoundEx
-
-        return -1
+        return 0
     }
 
     private fun initializeCourse(){
