@@ -23,8 +23,9 @@ object DataManager {
     /**Function that makes it easy to add a new note to the DataManager's collection following
      * the test-driven development testing technique, and return the index of that newly created note*/
     fun addNote(courseInfo: CourseInfo, noteTitle : String, noteContent:String) : Int {
-
-        return 0
+        val note = NoteInfo(courseInfo, noteTitle, noteContent)
+        notes.add(note)
+        return notes.lastIndex
     }
 
     private fun initializeCourse(){
