@@ -20,6 +20,15 @@ object DataManager {
         initializeNotes()
     }
 
+    /**Function that makes it easy to add a new note to the DataManager's collection following
+     * the test-driven development testing technique, and return the index of that newly created note*/
+    fun addNote(courseInfo: CourseInfo, noteTitle : String, noteContent:String) : Int {
+
+        //return a value that we fail the test, that is an index of -1 or an ArrayOutOfBoundEx
+
+        return -1
+    }
+
     private fun initializeCourse(){
 
         var course = CourseInfo("android_intents", "Android Programming with Intent ")
