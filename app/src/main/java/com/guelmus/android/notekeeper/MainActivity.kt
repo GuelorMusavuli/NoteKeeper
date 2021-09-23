@@ -12,7 +12,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-/** This class displays informations for an individual note */
+/** This class displays information for an individual,
+ *  and allow the user to create a new one or modify it*/
+
 class MainActivity : AppCompatActivity() {
     //TAG for the log entries using kotlin reflection dependency
     private var tag = this::class.simpleName

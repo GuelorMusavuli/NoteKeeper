@@ -20,15 +20,27 @@ object DataManager {
         initializeNotes()
     }
 
-    /**Function that makes it easy to add a new note to the DataManager's collection following
-     * the test-driven development testing technique, and return the index of that newly created note*/
+    /**This function will loop through the notes collection to find the note that has the passed values */
     fun addNote(courseInfo: CourseInfo, noteTitle : String, noteContent:String) : Int {
         val note = NoteInfo(courseInfo, noteTitle, noteContent)
         notes.add(note)
         return notes.lastIndex
     }
 
-    private fun initializeCourse(){
+    /**Function that makes it easy to add a new note to the DataManager's collection following
+     * the test-driven development testing technique, and return the index of that newly created note*/
+    fun findNote(courseInfo: CourseInfo, noteTitle : String, noteContent:String) : NoteInfo? {
+       for (note in notes) {
+           if (courseInfo == note.course && noteTitle == note.noteTitle && noteContent == note.noteContent) {
+               return note
+           }
+       }
+       return null
+    }
+
+
+
+    fun initializeCourse(){
 
         var course = CourseInfo("android_intents", "Android Programming with Intent ")
         courses[course.courseId] = course //add course to the list
@@ -49,6 +61,7 @@ object DataManager {
         var note = NoteInfo(course, "Dynamic intent resolution",
             "Wow, intents allow components to be resolved at runtime")
         notes.add(note)
+
         note = NoteInfo(course, "Delegating intents",
             "PendingIntents are powerful; they delegate much more than just a component invocation")
         notes.add(note)
@@ -76,6 +89,20 @@ object DataManager {
 //        note = NoteInfo(course, "Serialization",
 //            "Remember to include SerialVersionUID to assure version compatibility")
 //        notes.add(note)
+//        notes.add(
+//            NoteInfo(
+//                CourseInfo("android_intents", "Android Programming with Intents"),
+//                "Note 0",
+//                "Text 0"
+//            )
+//        )
+//        notes.add(
+//            NoteInfo(
+//                CourseInfo("android_intents", "Android Programming with Intents"),
+//                "Note 1",
+//                "Text 1"
+//            )
+//        )
 
 
     }
