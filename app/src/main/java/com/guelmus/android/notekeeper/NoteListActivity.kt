@@ -3,7 +3,9 @@ package com.guelmus.android.notekeeper
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 
@@ -15,17 +17,12 @@ class NoteListActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        //Populate listNotes with a collections of notes
-        listNotes.adapter = ArrayAdapter(this,
-            android.R.layout.simple_list_item_1,
-            DataManager.notes)
+        //Populate the listItems_rv with a collections of notes from the adapter
+        listItems_rv.layoutManager = LinearLayoutManager(this)
+
 
         //Launch MainActivity as per the user selected specific note
-        listNotes.setOnItemClickListener{ _, _, position, _ ->
-            val activityIntent = Intent(this, MainActivity::class.java)
-            activityIntent.putExtra(NOTE_POSITION, position)
-            startActivity(activityIntent)
-        }
+
 
         //Launch main activity without passed-in note
         fab.setOnClickListener {
@@ -38,7 +35,7 @@ class NoteListActivity : AppCompatActivity() {
     /**Notify the ListView about the change made by adding a new note to the list*/
     override fun onResume() {
         super.onResume()
-        (listNotes.adapter as ArrayAdapter<NoteInfo>).notifyDataSetChanged()
+
 
     }
 }
