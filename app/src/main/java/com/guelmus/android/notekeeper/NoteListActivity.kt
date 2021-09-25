@@ -2,8 +2,6 @@ package com.guelmus.android.notekeeper
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_note_list.*
@@ -29,15 +27,16 @@ class NoteListActivity : AppCompatActivity() {
         //Launch main activity without passed-in note
         fab.setOnClickListener {
             //Leads us to the Edit Note screen
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, NoteActivity::class.java))
         }
 
     }
 
-    /**Notify the ListView about the change made by adding a new note to the list*/
+    /**
+     * Notify the Adapter that the data might've changed when the user goes back
+     * to the NoteListActivity, so as to refresh the data that's being displayed*/
     override fun onResume() {
         super.onResume()
-
-
+        listItems_rv.adapter?.notifyDataSetChanged()
     }
 }

@@ -27,7 +27,7 @@ class CreateNewNoteTest{
     private val course = DataManager.courses["android_async"]
 
     @Rule  @JvmField//Ensure that NoteListActivity is up and running to launch the test
-    val noteListActivity = ActivityScenarioRule(MainActivity::class.java)
+    val noteListActivity = ActivityScenarioRule(NoteActivity::class.java)
 
     @Test //Verify whether the app properly handles the creation of the new note
     fun createNewNote(){
