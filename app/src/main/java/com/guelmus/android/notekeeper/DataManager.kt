@@ -54,6 +54,9 @@ object DataManager {
         course = CourseInfo("java_lang","Java Fundamentals : Java Language ")
         courses[course.courseId] = course
 
+        course = CourseInfo(courseTitle = "Java Fundamentals: The Core Platform", courseId ="java_core")
+        courses.set(course.courseId, course)
+
     }
 
     private fun initializeNotes() {
@@ -82,29 +85,21 @@ object DataManager {
             "Anonymous classes simplify implementing one-use types")
         notes.add(note)
 
-//        course = courses["java_core"]!!
-//        note = NoteInfo(course, "Compiler options",
-//            "The -jar option isn't compatible with with the -cp option")
-//        notes.add(note)
-//        note = NoteInfo(course, "Serialization",
-//            "Remember to include SerialVersionUID to assure version compatibility")
-//        notes.add(note)
+        course = courses["java_core"]!!
+        note = NoteInfo(course, "Compiler options",
+            "The -jar option isn't compatible with with the -cp option")
+        notes.add(note)
+        note = NoteInfo(course, "Serialization",
+            "Remember to include SerialVersionUID to assure version compatibility")
+        notes.add(note)
+
 //        notes.add(
 //            NoteInfo(
-//                CourseInfo("android_intents", "Android Programming with Intents"),
-//                "Note 0",
-//                "Text 0"
+//                CourseInfo("java_core", "Android Programming with Intents"),
+//                "Compiler options",
+//                "The -jar option isn't compatible with with the -cp option"
 //            )
 //        )
-//        notes.add(
-//            NoteInfo(
-//                CourseInfo("android_intents", "Android Programming with Intents"),
-//                "Note 1",
-//                "Text 1"
-//            )
-//        )
-
-
     }
 
 }

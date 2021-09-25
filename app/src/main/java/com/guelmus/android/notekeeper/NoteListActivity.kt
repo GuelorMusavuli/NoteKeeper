@@ -18,7 +18,9 @@ class NoteListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         //Populate the listItems_rv with a collections of notes from the adapter
+        // and set the position to display items
         listItems_rv.layoutManager = LinearLayoutManager(this)
+        listItems_rv.adapter = NoteRecyclerAdapter(this, DataManager.notes)
 
 
         //Launch MainActivity as per the user selected specific note

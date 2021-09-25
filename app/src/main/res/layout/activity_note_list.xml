@@ -28,6 +28,8 @@
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/create_note_button"
         app:srcCompat="@drawable/ic_add_white_24dp"
+        app:tint="@color/white"
+        android:backgroundTint="@color/pluralsight_orange"
         tools:ignore="ImageContrastCheck" />
 
     <include layout="@layout/content_note_list" />
