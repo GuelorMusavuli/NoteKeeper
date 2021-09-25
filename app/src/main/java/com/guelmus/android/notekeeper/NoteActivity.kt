@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.content_main.*
 /** This class displays information for an individual,
  *  and allow the user to create a new one or modify it*/
 
-class MainActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
     //TAG for the log entries using kotlin reflection dependency
     private var tag = this::class.simpleName
 
