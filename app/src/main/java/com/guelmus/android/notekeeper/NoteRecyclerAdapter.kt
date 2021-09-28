@@ -50,8 +50,6 @@ RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>(){
 
         //Keep track of the position of the note that's currently associated with the viewHolder
         holder.notePosition = position
-
-
     }
 
     //Return the total numbers pf items to be display
