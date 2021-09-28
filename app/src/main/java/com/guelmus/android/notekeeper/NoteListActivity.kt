@@ -6,8 +6,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.jwhh.notekeeper.CourseRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 
@@ -15,8 +17,15 @@ import kotlinx.android.synthetic.main.content_note_list.*
 
 class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
+    //Fields that associate note layout manager and RecyclerViewAdapter with the Rv
     private val noteLayoutManager by lazy{ LinearLayoutManager(this) }
     private val noteRecyclerAdapter by lazy { NoteRecyclerAdapter(this, DataManager.notes) }
+
+    //Fields that associate course layout manager and RecyclerViewAdapter with the Rv
+    private val courseLayoutManager by lazy{ GridLayoutManager(this, 2) }
+    private val courseRecyclerAdapter by lazy {
+        CourseRecyclerAdapter(this, DataManager.courses.values.toList())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +46,7 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()//let the toggle knows whether the current state of the navDrawer is opened or closedg
+        toggle.syncState()//let the toggle knows whether the current state of the navDrawer is opened or closed
 
         //Set this activity as the Listener for handling NavView's options selection
         nav_view.setNavigationItemSelectedListener(this)
@@ -51,7 +60,7 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 displayNotes()
             }
             R.id.nav_courses ->{
-
+                displayCourses()
             }
             R.id.nav_share ->{
 
@@ -66,7 +75,7 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
     /**
-     * Methods to display either the list of notes or the list of courses
+     * Methods to display the list of notes
      * in response to the user's NavigationView selection
      * */
     private fun displayNotes() {
@@ -78,6 +87,21 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         //Set the notes option within the NavView highlighted at the first  launch of the app.
         nav_view.menu.findItem(R.id.nav_notes).isChecked = true
+    }
+
+    /**
+     * Methods to display the list of courses
+     * in response to the user's NavigationView selection
+     * */
+    private fun displayCourses() {
+
+        //Populate the listItems_rv with a collections of notes from the adapter
+        // and set the position to display items
+        listItems_rv.layoutManager = courseLayoutManager
+        listItems_rv.adapter = courseRecyclerAdapter
+
+        //Always set the courses option within the NavView to checked any time this method is called
+        nav_view.menu.findItem(R.id.nav_courses).isChecked = true
     }
 
     /**

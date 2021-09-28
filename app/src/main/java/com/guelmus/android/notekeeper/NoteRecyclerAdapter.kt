@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NoteRecyclerAdapter(private val context : Context, private  val notes : List<NoteInfo>):
-RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>(){
+class NoteRecyclerAdapter(private val context: Context, private val notes: List<NoteInfo>) :
+    RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>() {
 
     //Field to inflate item_note_list layout resource
     private val layoutInflater = LayoutInflater.from(context)
@@ -18,13 +18,13 @@ RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>(){
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        //Reference the views within item_note_list to display data from DataManager
+        //Reference the views within item_note_list to display notes from DataManager
         val textCourse = itemView.findViewById(R.id.textCourse) as TextView
         val textTitle = itemView.findViewById(R.id.textTitle) as TextView
         var notePosition = 0
 
         //ClickHandler at the top-level view for a particular item
-        init{
+        init {
             itemView.setOnClickListener {
                 //launch NoteActivity, passing in the position of the note selected
                 val intent = Intent(context, NoteActivity::class.java)
@@ -41,7 +41,7 @@ RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>(){
         return NoteViewHolder(itemView)
     }
 
-    //Bind data with those views the RV's recycling
+    //Bind data with the views the RV's recycling to display them
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         //Display info from the note
         val currentNote = notes[position]
