@@ -2,14 +2,21 @@ package com.guelmus.android.notekeeper
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 
-class NoteListActivity : AppCompatActivity() {
+
+
+class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+
+    private val noteLayoutManager by lazy{ LinearLayoutManager(this) }
+    private val noteRecyclerAdapter by lazy { NoteRecyclerAdapter(this, DataManager.notes) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,14 +24,7 @@ class NoteListActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        //Populate the listItems_rv with a collections of notes from the adapter
-        // and set the position to display items
-        listItems_rv.layoutManager = LinearLayoutManager(this)
-        listItems_rv.adapter = NoteRecyclerAdapter(this, DataManager.notes)
-
-
-        //Launch MainActivity as per the user selected specific note
-
+        displayNotes()
 
         //Launch main activity without passed-in note
         fab.setOnClickListener {
@@ -39,7 +39,45 @@ class NoteListActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()//let the toggle knows whether the current state of the navDrawer is opened or closedg
 
+        //Set this activity as the Listener for handling NavView's options selection
+        nav_view.setNavigationItemSelectedListener(this)
 
+    }
+
+    /**Method for handling the navigation view 's options click*/
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_notes ->{
+                displayNotes()
+            }
+            R.id.nav_courses ->{
+
+            }
+            R.id.nav_share ->{
+
+            }
+            R.id.nav_send ->{
+
+            }
+
+        }
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    /**
+     * Methods to display either the list of notes or the list of courses
+     * in response to the user's NavigationView selection
+     * */
+    private fun displayNotes() {
+
+        //Populate the listItems_rv with a collections of notes from the adapter
+        // and set the position to display items
+        listItems_rv.layoutManager = noteLayoutManager
+        listItems_rv.adapter = noteRecyclerAdapter
+
+        //Set the notes option within the NavView highlighted at the first  launch of the app.
+        nav_view.menu.findItem(R.id.nav_notes).isChecked = true
     }
 
     /**
