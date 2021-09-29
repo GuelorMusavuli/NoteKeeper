@@ -48,31 +48,36 @@ class NavigationTest{
     @Test
     fun selectNoteAfterNavigationDrawerChange(){
 
-        //Open the Navigation drawer and select courses option within it for the RecyclerView
-        // to display a list of courses
+        //Open the Navigation drawer, select courses option within it to display a list of courses
+        // and then select the first course that's being displayed from the RecyclerView
+
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open())
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_courses))
-
-        //Interact with  RecyclerView showing courses to select the first course that's being displayed
-        val coursePosition = 0
+        val coursePosition = 0//identify the position of the course being displayed
         onView(withId(R.id.listItems_rv)).perform(
             RecyclerViewActions.actionOnItemAtPosition<CourseRecyclerAdapter.ViewHolder>(coursePosition, click())
         )
 
-        //Test case to display a list of note and make a selection. Similar to the previous test
+        //Open the Navigation drawer, select notes option within it to display a list of notes
+        // and then select the first note that's being displayed from the RecyclerView
+
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open())
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_notes))
-        val notePosition = 0
+        val notePosition = 0//identify the position of the note being displayed
         onView(withId(R.id.listItems_rv)).perform(
             RecyclerViewActions.actionOnItemAtPosition<NoteRecyclerAdapter.NoteViewHolder>(notePosition, click())
         )
 
+        //Verify that the notes selection behaves as excepted.
+       // In other words, if we're displaying the correct note selected by the user.
+
+        val note = DataManager.notes[notePosition]//reference to the selected note
+        onView(withId(R.id.spinnerCourses)).check(matches(withSpinnerText(containsString(note.course?.courseTitle))))
+        onView(withId(R.id.textNoteTitle)).check(matches(withText(containsString(note.noteTitle))))
+        onView(withId(R.id.textNoteText)).check(matches(withText(containsString(note.noteContent))))
+
 
 
     }
-
-
-
-
 
 }

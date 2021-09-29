@@ -56,12 +56,10 @@ class CreateNewNoteTest{
         pressBack()
 
 
-        // Verifying app logic behavior during UI interaction. Verifying the create of the new note
-        // creation behaves correctly based on data by checking if what i put in is actually what i get out. * We are checking if the newly
-        // Created note is actually in the DataManager.notes list. We are verifying if the user
-        // interaction actually created the new note.
+        //  Verifying the note creation behavior behind the UI interaction based on data,
+        //  by checking if what we put in is actually what it returns.
         // E -expected value(what i put in) /A -actual value to check against(what i got out)
-        val newlyCreatedNote = DataManager.notes.last()
+        val newlyCreatedNote = DataManager.notes.last() //note created
         assertEquals(course, newlyCreatedNote.course)
         assertEquals(noteTitle, newlyCreatedNote.noteTitle)
         assertEquals(noteText, newlyCreatedNote.noteContent)
