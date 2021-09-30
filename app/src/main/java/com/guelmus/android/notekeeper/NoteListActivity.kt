@@ -22,7 +22,9 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private val noteRecyclerAdapter by lazy { NoteRecyclerAdapter(this, DataManager.notes) }
 
     //Fields that associate course layout manager and RecyclerViewAdapter with the Rv
-    private val courseLayoutManager by lazy{ GridLayoutManager(this, 2) }
+    private val courseLayoutManager by lazy{
+        GridLayoutManager(this, resources.getInteger(R.integer.course_grid_span))
+    }
     private val courseRecyclerAdapter by lazy {
         CourseRecyclerAdapter(this, DataManager.courses.values.toList())
     }

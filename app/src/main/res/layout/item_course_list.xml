@@ -39,6 +39,7 @@
                 android:layout_marginEnd="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="@dimen/course_name_size"
                 android:textAppearance="@style/CourseTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
