@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_share_title">Partager</string>
+    <string name="nav_send_title">Envoyer</string>
+    <string name="nav_communicate">Communiquer</string>
+    <string name="nav_courses_title">Cours</string>
+    <string name="nav_notes_title">Notes</string>
+    <string name="nav_how_many_message_format">Notes: %1$d | Cours: %2$d</string>
+    <string name="nav_send_message">Envoyé</string>
+    <string name="nav_share_message">Ne pensez-vous avoir suffisament partagé</string>
+    <string name="note_title_hint">Titre de la Note</string>
+    <string name="note_text_hint">"Le contenu "</string>
+    <string name="note_activity_label">Modifier la note</string>
+    <string name="next">Suivant</string>
+    <string name="previous">Precèdent</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="app_name">Carnet de Note</string>
+    <string name="nav_ow_many_title">Combien</string>
+</resources>
