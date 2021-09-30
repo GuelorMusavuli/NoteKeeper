@@ -32,12 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        style="@style/AddFAB"
         android:contentDescription="@string/create_note_button"
-        app:srcCompat="@drawable/ic_add_white_24dp"
-        app:tint="@color/white"
-        android:backgroundTint="@color/pluralsight_orange"
-        tools:ignore="ImageContrastCheck" />
+      />
 
     <include layout="@layout/content_note_list" />
 

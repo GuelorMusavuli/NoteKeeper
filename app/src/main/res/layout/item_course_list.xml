@@ -40,7 +40,7 @@
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="@dimen/course_name_size"
-                android:textAppearance="@style/CourseTitle"
+                android:textAppearance="@style/BrandedText.CourseName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
