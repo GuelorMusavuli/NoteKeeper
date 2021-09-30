@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.jwhh.notekeeper.CourseRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
@@ -64,17 +65,22 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.nav_courses ->{
                 displayCourses()
             }
-            R.id.nav_share ->{
-
+            R.id.nav_share -> {
+                handleSelection(R.string.nav_share_message)
             }
-            R.id.nav_send ->{
-
+            R.id.nav_send -> {
+                handleSelection(R.string.nav_send_message)
             }
 
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    private fun handleSelection(stringId: Int) {
+        Snackbar.make(listItems_rv, stringId, Snackbar.LENGTH_LONG).show()
+    }
+
 
     /**
      * Methods to display the list of notes
