@@ -71,6 +71,13 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.nav_send -> {
                 handleSelection(R.string.nav_send_message)
             }
+            R.id.nav_how_many -> {
+                //provides information about the number of notes and courses currently in the app
+                val message = getString(R.string.nav_how_many_message_format,
+                    DataManager.notes.size, DataManager.courses.size)
+                Snackbar.make(listItems_rv, message, Snackbar.LENGTH_LONG).show()
+            }
+
 
         }
         drawer_layout.closeDrawer(GravityCompat.START)

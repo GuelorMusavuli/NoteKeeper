@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/drawable/ic_help_black_24dp.xml" value="0.13229166666666667" />
         <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/drawable/ic_menu_camera.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/drawable/orange_rectangle_stripe.xml" value="0.12135416666666667" />
         <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/drawable/side_nav_bar.xml" value="0.16979166666666667" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/layout/item_note_list.xml" value="0.15915119363395225" />
         <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/layout/nav_header_items.xml" value="0.1" />
         <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/menu/activity_items_drawer.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/GM/AndroidStudioProjects/Projects/NoteKeeper/app/src/main/res/menu/menu_main.xml" value="0.11614583333333334" />
       </map>
     </option>
   </component>

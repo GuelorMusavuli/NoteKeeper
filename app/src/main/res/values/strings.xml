@@ -16,6 +16,13 @@
     <string name="nav_share_message">Don\'t you think you\'ve shared enough</string>
     <string name="nav_send_message">Send</string>
     <string name="note_activity_label">Edit Note</string>
+    <string name="nav_how_many_message_format">Notes: %1$d | Courses: %2$d</string>
+    <string name="nav_notes_title">Notes</string>
+    <string name="nav_courses_title">Courses</string>
+    <string name="nav_communicate">Communicate</string>
+    <string name="nav_share_title">Share</string>
+    <string name="nav_send_title">Send</string>
+    <string name="nav_ow_many_title">How many</string>
 
 
 </resources>
