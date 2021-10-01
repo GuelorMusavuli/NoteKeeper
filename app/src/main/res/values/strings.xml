@@ -22,7 +22,10 @@
     <string name="nav_communicate">Communicate</string>
     <string name="nav_share_title">Share</string>
     <string name="nav_send_title">Send</string>
-    <string name="nav_ow_many_title">How many</string>
+    <string name="nav_ow_many_title">How many</string>>
+    <string name="cancel">Cancel</string>
+    <string name="reminder">Reminder</string>
+    <string name="reminder_body">Review %1$s</string>
 
 
 </resources>

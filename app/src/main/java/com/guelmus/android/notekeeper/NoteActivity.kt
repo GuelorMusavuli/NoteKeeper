@@ -1,5 +1,6 @@
 package com.guelmus.android.notekeeper
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -21,6 +22,9 @@ class NoteActivity : AppCompatActivity() {
 
     //Determine whether a note position was set or not
     private var notePosition = POSITION_NOT_SET
+
+    private var isNewNote = false
+    private var isCancelling = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +75,21 @@ class NoteActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            //R.id.action_settings -> true
+            R.id.action_reminder -> {
+                ReminderNotification.notify(this,
+                    "Reminder",
+                    getString(R.string.reminder_body, DataManager.notes[notePosition].noteTitle),
+                    notePosition
+                )
+                true
+            }
+
+            R.id.action_cancel -> {
+                isCancelling = true
+                finish()
+                true
+            }
             R.id.action_next -> {
                 if (notePosition < DataManager.notes.lastIndex){
                     moveNext()
@@ -120,6 +138,7 @@ class NoteActivity : AppCompatActivity() {
     /**Move t the next note on the screen */
     private fun moveNext() {
         ++notePosition
+        saveNote()
         displayNote()
 
         //Trigger change to the menu item at runtime
@@ -127,6 +146,7 @@ class NoteActivity : AppCompatActivity() {
     }
 
     /**Change menu state*/
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
         //If user reaches the last notes, changes the appearance of the menu icon
@@ -148,8 +168,13 @@ class NoteActivity : AppCompatActivity() {
     /** Save persistent data or notes when user is no longer interacting with this activity*/
     override fun onPause() {
         super.onPause()
-        saveNote()
-        Log.d(tag, "OnPause")
+        when {
+            isCancelling -> {
+                if(isNewNote)
+                    DataManager.notes.removeAt(notePosition)
+            }
+            else -> saveNote()
+        }
     }
 
     /**Save the notes from screen into the note list within DataManager*/
