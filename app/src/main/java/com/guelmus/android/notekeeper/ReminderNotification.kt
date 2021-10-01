@@ -65,11 +65,11 @@ object ReminderNotification {
           .setContentText(bodyText)
           .setPriority(NotificationCompat.PRIORITY_DEFAULT)
           .setTicker(titleText)
-          .setContentIntent( // Set the pending intent to be initiated when the user touches the notification.
+          .setContentIntent( // Pending intent to be initiated when the user touches the notification.
             PendingIntent.getActivity(
                 context,
                 0,
-                Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")),
+                Intent(context, NoteListActivity::class.java),
                 PendingIntent.FLAG_UPDATE_CURRENT))
 
           // Automatically dismiss the notification when it is touched.
