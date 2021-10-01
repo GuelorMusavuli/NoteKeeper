@@ -58,6 +58,8 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         //Set this activity as the Listener for handling NavView's options selection
         nav_view.setNavigationItemSelectedListener(this)
 
+        registerNotificationChannel()
+
     }
 
     /**Method for handling the navigation view 's options click*/
@@ -132,6 +134,27 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    /**
+     *Register the app's notification channel with the system by passing an instance of
+     * NotificationChannel to createNotificationChannel()
+     * to deliver the notification on Android 8.0 and higher,
+     * */
+    private fun registerNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            //Grab to a Notification service as NotificationManager
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE)
+                    as NotificationManager
+
+            //Create a new notification channel
+            val channel = NotificationChannel(ReminderNotification.REMINDER_CHANNEL,
+                "Note Reminders",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            nm.createNotificationChannel(channel)
         }
     }
 
