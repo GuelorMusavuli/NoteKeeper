@@ -22,7 +22,8 @@
         <activity
             android:name=".NoteActivity"
             android:label="@string/note_activity_label"
-            android:theme="@style/Theme.NoteKeeper.NoActionBar">
+            android:theme="@style/Theme.NoteKeeper.NoActionBar"
+            android:parentActivityName=".NoteListActivity">
         </activity>
     </application>
 
