@@ -72,8 +72,8 @@ object ReminderNotification {
     val builder = NotificationCompat.Builder(context, REMINDER_CHANNEL)
           .setDefaults(Notification.DEFAULT_ALL)
           .setSmallIcon(R.drawable.ic_stat_reminder)
-          .setContentTitle("5 New Messages")
-          .setContentText("Review your messages")
+          .setContentTitle(titleText)
+          .setContentText(bodyText)
           .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.logo))
           .setPriority(NotificationCompat.PRIORITY_DEFAULT)
           .setTicker(titleText)
@@ -84,15 +84,11 @@ object ReminderNotification {
           // Automatically dismiss the notification when it is touched.
           .setAutoCancel(true)
 
-          //Inbox style notification
-          .setStyle(NotificationCompat.InboxStyle()
-              .addLine("Your taxes are due")
-              .addLine("Free cake This Tuesday")
-              .addLine("Your order has shipped")
-              .addLine("Your Pluralsight Subscription")
-              .addLine("Hey! How are you ?")
+          //Big Picture style notification
+          .setStyle(NotificationCompat.BigPictureStyle()
+              .bigPicture(BitmapFactory.decodeResource(context.resources, R.drawable.logo))
+              .bigLargeIcon(null)
           )
-
 
           // Add a share action
           .addAction(R.drawable.ic_share_black_24dp,"Share", shareIntent)
