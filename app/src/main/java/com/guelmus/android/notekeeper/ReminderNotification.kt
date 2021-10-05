@@ -5,7 +5,6 @@ import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -40,14 +39,19 @@ object ReminderNotification {
   fun notify(context: Context, titleText: String, bodyText: String, notePosition: Int) {
 
       //Intent to fire up noteActivity
-      val intent = Intent(context, NoteActivity::class.java)
-      intent.putExtra(NOTE_POSITION, notePosition)
+//      val intent = Intent(context, NoteActivity::class.java)
+//      intent.putExtra(NOTE_POSITION, notePosition)
 
-      //Navigate to NoteActivity with an appropriate back stack in place,
-      // using NoteActivity's parent
-      val pendingIntent = TaskStackBuilder.create(context)
-          .addNextIntentWithParentStack(intent)
-          .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+      //Intent to fire off a special activity
+      val intent = NoteQuickViewActivity.getIntent(context, notePosition)
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK  or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+
+      //Navigate to NoteQuickViewActivity
+      val pendingIntent = PendingIntent.getActivity(context,
+          0,
+           intent,
+           PendingIntent.FLAG_UPDATE_CURRENT)
 
       //Share the note reminder
       val shareIntent = PendingIntent.getActivity(context,

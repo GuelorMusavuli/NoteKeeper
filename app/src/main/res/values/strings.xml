@@ -26,6 +26,8 @@
     <string name="cancel">Cancel</string>
     <string name="reminder">Reminder</string>
     <string name="reminder_body">Review %1$s</string>
+    <string name="note">Note</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

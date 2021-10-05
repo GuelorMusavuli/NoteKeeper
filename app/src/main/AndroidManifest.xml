@@ -25,6 +25,12 @@
             android:theme="@style/Theme.NoteKeeper.NoActionBar"
             android:parentActivityName=".NoteListActivity">
         </activity>
+        <activity
+            android:name=".NoteQuickViewActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="" />
+
     </application>
 
 </manifest>
