@@ -13,7 +13,11 @@
     <string name="note_activity_label">Modifier la note</string>
     <string name="next">Suivant</string>
     <string name="previous">Precèdent</string>
-    <string name="action_settings">Paramètres</string>
     <string name="app_name">Carnet de Note</string>
     <string name="nav_ow_many_title">Combien</string>
+    <string name="cancel">Annuler</string>
+    <string name="reminder">Rappel</string>
+    <string name="note">Note</string>
+    <string name="delete">Supprimer</string>
+    <string name="comments">Commentaires</string>
 </resources>

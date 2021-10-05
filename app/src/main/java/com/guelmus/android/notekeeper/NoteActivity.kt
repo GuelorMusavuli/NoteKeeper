@@ -1,6 +1,5 @@
 package com.guelmus.android.notekeeper
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -9,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.content.res.AppCompatResources
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.*
 
 /** This class displays information for an individual,
@@ -45,12 +44,11 @@ class NoteActivity : AppCompatActivity() {
          * Restore saved notePosition from instance state when the activity is destroyed and then recreated.
         If it is the initial creation of the activity, get notePosition from intent extra,
         and if no notePosition has been passed in the extra, then set the notePosition
-        to position not set.*/
+        to position not set.
+         */
         notePosition =
-            savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET) ?: intent.getIntExtra(
-                NOTE_POSITION,
-                POSITION_NOT_SET
-            )
+            savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET) ?:
+            intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET )
 
         //if there is a notePosition, populate the screen views
         if (notePosition != POSITION_NOT_SET) {
@@ -58,10 +56,12 @@ class NoteActivity : AppCompatActivity() {
         } else {
             //Create an empty new note and add it to Data Manager, and then set
             // the position of the current note to the newly empty note created
+                isNewNote = true
             DataManager.notes.add(NoteInfo())
             notePosition = DataManager.notes.lastIndex
         }
         Log.d(tag, "OnCreate")
+
     }
 
     /**Save the instance state of notePosition when the activity is destroyed */
@@ -69,50 +69,9 @@ class NoteActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState, outPersistentState)
         outState.putInt(NOTE_POSITION, notePosition)
     }
-    /**Handle menu click*/
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            //R.id.action_settings -> true
-            R.id.action_reminder -> {
-                ReminderNotification.notify(this,
-                    "Reminder",
-                    getString(R.string.reminder_body, DataManager.notes[notePosition].noteTitle),
-                    notePosition
-                )
-                true
-            }
-
-            R.id.action_cancel -> {
-                isCancelling = true
-                finish()
-                true
-            }
-            R.id.action_next -> {
-                if (notePosition < DataManager.notes.lastIndex){
-                    moveNext()
-                }else{
-                    val message = "No more notes"
-                    showMessage(message)
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     /** Populate views in the main activity with notes from  intent extra*/
     private fun displayNote() {
-        if (notePosition > DataManager.notes.lastIndex){
-            showMessage("Note not found")
-            Log.e(tag, "Invalid note position $notePosition, " +
-                    "max valid position ${DataManager.notes.lastIndex}")
-            return
-        }
-
-        Log.i(tag, "Displaying note for position $notePosition")
 
         //Get note corresponding to the notePosition and set the note's title and text
         // to the string values contained in the note
@@ -125,20 +84,43 @@ class NoteActivity : AppCompatActivity() {
         spinnerCourses.setSelection(coursePosition)
     }
 
-    private fun showMessage(message: String) {
-        Snackbar.make(textNoteTitle, message, Snackbar.LENGTH_LONG).show()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_note, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item(menu) clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            //R.id.action_settings -> true
+            R.id.action_reminder -> {
+                ReminderNotification.notify(this,
+                    "Reminder",
+                    getString(R.string.reminder_body, DataManager.notes[notePosition].noteTitle),
+                    notePosition
+                )
+                true
+            }
+            R.id.action_cancel -> {
+                isCancelling = true
+                finish()
+                true
+            }
+            R.id.action_next -> {
+                moveNext()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**Move t the next note on the screen */
     private fun moveNext() {
-        ++notePosition
         saveNote()
+        ++notePosition
         displayNote()
 
         //Trigger change to the menu item at runtime
@@ -146,22 +128,21 @@ class NoteActivity : AppCompatActivity() {
     }
 
     /**Change menu state*/
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
         //If user reaches the last notes, changes the appearance of the menu icon
         if (notePosition >= DataManager.notes.lastIndex) {
-            Toast.makeText(this, "You're at the last note!", Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(this, "No more notes left!", Toast.LENGTH_SHORT).show()
+
             //Reference the menu to be changed
             val menuItem = menu?.findItem(R.id.action_next)
             if (menuItem != null) {
                 //Change the next menu icon if at last index and disable click on it
-                menuItem.icon = getDrawable(R.drawable.ic_block_white_24dp)
+                menuItem.icon = AppCompatResources.getDrawable(this, R.drawable.ic_block_white_24dp)
                 menuItem.isEnabled = false
-
             }
         }
-
         return super.onPrepareOptionsMenu(menu)
     }
 

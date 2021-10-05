@@ -13,7 +13,11 @@ data class CourseInfo (val courseId : String, val courseTitle : String) {
 /**
  * Class that represent a note associated with a course
  * */
-data class NoteInfo(var course: CourseInfo? = null,
-                    var noteTitle: String? = null, var noteContent: String? = null)
+data class NoteInfo(
+    var course: CourseInfo? = null,
+    var noteTitle: String? = "",
+    var noteContent: String? = null,
+)
+
 
 

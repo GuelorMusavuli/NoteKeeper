@@ -16,7 +16,7 @@ object DataManager {
 
     init {
         //Initialize the courses and notes whenever an instance of this class is created
-        initializeCourse()
+        initializeCourses()
         initializeNotes()
     }
 
@@ -39,8 +39,7 @@ object DataManager {
     }
 
 
-
-    fun initializeCourse(){
+    private fun initializeCourses(){
 
         var course = CourseInfo("android_intents", "Android Programming with Intent ")
         courses[course.courseId] = course //add course to the list

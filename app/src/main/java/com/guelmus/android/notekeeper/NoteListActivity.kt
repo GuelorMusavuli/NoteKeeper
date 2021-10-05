@@ -1,5 +1,6 @@
 package com.guelmus.android.notekeeper
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -143,24 +144,22 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
      * to deliver the notification on Android 8.0 and higher,
      * */
     private fun registerNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //Grab to a Notification service as NotificationManager
+        val nm = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
 
-            //Grab to a Notification service as NotificationManager
-            val nm = getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager
-
-            //Create a new notification channel
-            val channel = NotificationChannel(ReminderNotification.REMINDER_CHANNEL,
-                "Note Reminders",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            nm.createNotificationChannel(channel)
-        }
+        //Create a new notification channel
+        val channel = NotificationChannel(ReminderNotification.REMINDER_CHANNEL,
+            "Note Reminders",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        nm.createNotificationChannel(channel)
     }
 
     /**
      * Notify the Adapter that the data might've changed when the user goes back
      * to the NoteListActivity, so as to refresh t that's being displayed*/
+    @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
         listItems_rv.adapter?.notifyDataSetChanged()
