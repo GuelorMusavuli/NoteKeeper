@@ -151,7 +151,7 @@ class NoteListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         //Create a new notification channel
         val channel = NotificationChannel(ReminderNotification.REMINDER_CHANNEL,
             "Note Reminders",
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_HIGH
         )
         nm.createNotificationChannel(channel)
     }

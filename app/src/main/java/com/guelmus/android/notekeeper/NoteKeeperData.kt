@@ -17,7 +17,13 @@ data class NoteInfo(
     var course: CourseInfo? = null,
     var noteTitle: String? = "",
     var noteContent: String? = null,
+    var comments: ArrayList<NoteComment> = ArrayList()
 )
+
+/**
+ *  Class to stores comments on notes
+ *  */
+data class NoteComment(var name: String?, var comment: String, var timestamp: Long)
 
 
 

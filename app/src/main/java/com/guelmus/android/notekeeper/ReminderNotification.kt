@@ -8,9 +8,10 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
+import androidx.core.content.ContextCompat
 
 /**
  * Helper class for showing and canceling reminder
@@ -22,12 +23,15 @@ import androidx.core.app.NotificationCompat
  */
 object ReminderNotification {
 
-    //Unique identifier used by Android Framework for tracking
-    // this type of notification.
+    //Unique identifier for this type of notification.
     private const val NOTIFICATION_TAG = "Reminder"
 
     //Unique identifier for channel
-     const val REMINDER_CHANNEL = "reminders"
+    const val REMINDER_CHANNEL = "reminders"
+
+    //Will be used by the pending intent to grab the Text of the RemoteInput
+    const val KEY_TEXT_REPLY ="keyTextReply"
+
 
   /**
    * This is the method we call whenever we want to create a notification.
@@ -38,7 +42,7 @@ object ReminderNotification {
    * @see .cancel
    */
   @SuppressLint("UnspecifiedImmutableFlag")
-  fun notify(context: Context, titleText: String, bodyText: String, notePosition: Int) {
+  fun notify(context: Context, note: NoteInfo, notePosition: Int) {
 
       //Intent to be fire off NoteActivity when taps on notification
       val intent = Intent(context, NoteActivity::class.java)
@@ -47,17 +51,46 @@ object ReminderNotification {
       //Navigate to NoteActivity with an appropriate back stack in place
       val pendingIntent = TaskStackBuilder.create(context)
           .addNextIntentWithParentStack(intent)
-          .getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT )
+          .getPendingIntent(0,PendingIntent.FLAG_CANCEL_CURRENT )
 
-      //Share the note reminder
-      val shareIntent = PendingIntent.getActivity(context,
-          0,
-          Intent.createChooser(Intent(Intent.ACTION_SEND)
-              .setType("text/plain")
-              .putExtra(Intent.EXTRA_TEXT,bodyText),
-              "Share Note Reminder"),
-          PendingIntent.FLAG_UPDATE_CURRENT)
+      //Three messages that will go directly into the messaging style
+      val message1 = NotificationCompat.MessagingStyle.Message(
+          note.comments[0].comment,
+          note.comments[0].timestamp,
+          note.comments[0].name)
+      val message2 = NotificationCompat.MessagingStyle.Message(
+          note.comments[1].comment,
+          note.comments[1].timestamp,
+          note.comments[1].name)
+      val message3 = NotificationCompat.MessagingStyle.Message(
+          note.comments[2].comment,
+          note.comments[2].timestamp,
+          note.comments[2].name)
 
+      //Object that display the quick reply's text input field to comment a note
+      val remoteInput = RemoteInput.Builder(KEY_TEXT_REPLY)
+          .setLabel("Add Note")
+          .build()
+
+      //Intent that will fire off NotificationBroadCastReceiver
+      val replyIntent = Intent(context, NotificationBroadCastReceiver::class.java)
+      replyIntent.putExtra(NOTE_POSITION, notePosition)
+
+      //NotificationBroadCastReceiver's pending intent
+      val replyPendingIntent = PendingIntent.getBroadcast(
+          context,
+          100,
+          replyIntent,
+          PendingIntent.FLAG_UPDATE_CURRENT
+      )
+
+      //Reply Action
+      val replyAction = NotificationCompat.Action.Builder(
+          R.drawable.ic_reply_black_24dp, //icon for direct reply
+          "AddNote", //button text
+          replyPendingIntent)
+          .addRemoteInput(remoteInput)
+          .build()
 
       /**
        * Set appropriate defaults for the notification light, sound,and vibration.(.setDefaults)
@@ -66,32 +99,29 @@ object ReminderNotification {
        * All fields below the above lines are optional.
        *
        * Use a default priority (recognized on devices running Android 4.1 or later)(Priority)
-       * Set ticker text (preview) information for this notification.
+       * Set ticker text (preview) information for this notification for accessibility readers.
        *
        * */
     val builder = NotificationCompat.Builder(context, REMINDER_CHANNEL)
           .setDefaults(Notification.DEFAULT_ALL)
           .setSmallIcon(R.drawable.ic_stat_reminder)
-          .setContentTitle(titleText)
-          .setContentText(bodyText)
-          .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.logo))
-          .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-          .setTicker(titleText)
+          .setContentTitle("Comments about " + note.noteTitle)
+          .setPriority(NotificationCompat.PRIORITY_HIGH)
+          .setTicker("Comments about " + note.noteTitle)
           .setContentIntent( // Pending intent to be initiated when the user touches the notification.
             pendingIntent
           )
-
-          // Automatically dismiss the notification when it is touched.
-          .setAutoCancel(true)
-
-          //Big Picture style notification
-          .setStyle(NotificationCompat.BigPictureStyle()
-              .bigPicture(BitmapFactory.decodeResource(context.resources, R.drawable.logo))
-              .bigLargeIcon(null)
+          .setAutoCancel(true)  // Automatically dismiss the notification when it is touched.
+          .setColor(ContextCompat.getColor(context, R.color.darkOrange))//Set the color
+          .setColorized(true)
+          .setOnlyAlertOnce(true) //alert only the first time
+          .setStyle(NotificationCompat.MessagingStyle("Me")//message style notification
+              .setConversationTitle(note.noteTitle)
+              .addMessage(message3)
+              .addMessage(message2)
+              .addMessage(message1)
           )
-
-          // Add a share action
-          .addAction(R.drawable.ic_share_black_24dp,"Share", shareIntent)
+          .addAction(replyAction)// Add a the direct reply action
 
       notify(context, builder.build())
   }
@@ -106,9 +136,9 @@ object ReminderNotification {
      * Cancels any notifications of this type previously shown using
      * [.notify].
      */
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
-    fun cancel(context: Context) {
-        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        nm.cancel(NOTIFICATION_TAG, 0)
-    }
+//    @TargetApi(Build.VERSION_CODES.ECLAIR)
+//    fun cancel(context: Context) {
+//        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        nm.cancel(NOTIFICATION_TAG, 0)
+//    }
 }

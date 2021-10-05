@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -62,6 +63,8 @@ class NoteActivity : AppCompatActivity() {
         }
         Log.d(tag, "OnCreate")
 
+        displayComments()
+
     }
 
     /**Save the instance state of notePosition when the activity is destroyed */
@@ -84,6 +87,16 @@ class NoteActivity : AppCompatActivity() {
         spinnerCourses.setSelection(coursePosition)
     }
 
+    /**
+     * Methods to display the list of users comments on notes
+     * */
+    private fun displayComments() {
+        //Populate the commentsList_rv with a collections of comments from the adapter
+        val commentsAdapter = CommentRecyclerAdapter(this, DataManager.notes[notePosition])
+        commentsList_rv?.layoutManager = LinearLayoutManager(this)
+        commentsList_rv?.adapter = commentsAdapter
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_note, menu)
@@ -98,8 +111,7 @@ class NoteActivity : AppCompatActivity() {
             //R.id.action_settings -> true
             R.id.action_reminder -> {
                 ReminderNotification.notify(this,
-                    "Reminder",
-                    getString(R.string.reminder_body, DataManager.notes[notePosition].noteTitle),
+                    DataManager.notes[notePosition],
                     notePosition
                 )
                 true
