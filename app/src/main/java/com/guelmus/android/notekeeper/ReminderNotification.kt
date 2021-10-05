@@ -72,8 +72,8 @@ object ReminderNotification {
     val builder = NotificationCompat.Builder(context, REMINDER_CHANNEL)
           .setDefaults(Notification.DEFAULT_ALL)
           .setSmallIcon(R.drawable.ic_stat_reminder)
-          .setContentTitle(titleText)
-          .setContentText(bodyText)
+          .setContentTitle("5 New Messages")
+          .setContentText("Review your messages")
           .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.logo))
           .setPriority(NotificationCompat.PRIORITY_DEFAULT)
           .setTicker(titleText)
@@ -84,15 +84,13 @@ object ReminderNotification {
           // Automatically dismiss the notification when it is touched.
           .setAutoCancel(true)
 
-          //BigText style notification(collapsed and expanded)
-          .setStyle(NotificationCompat.BigTextStyle()
-              .bigText("Leverage agile frameworks to provide a robust synopsis for high " +
-                      "level overviews. iterative approaches to corporate strategy foster " +
-                      "collaborative thinking to further the overall value proposition. Organically" +
-                      "grow the holistic world view of disruptive innovation via workplace diversity " +
-                      "and empowerment ")
-              .setBigContentTitle(titleText)
-              .setSummaryText("Summary Text")
+          //Inbox style notification
+          .setStyle(NotificationCompat.InboxStyle()
+              .addLine("Your taxes are due")
+              .addLine("Free cake This Tuesday")
+              .addLine("Your order has shipped")
+              .addLine("Your Pluralsight Subscription")
+              .addLine("Hey! How are you ?")
           )
 
 
