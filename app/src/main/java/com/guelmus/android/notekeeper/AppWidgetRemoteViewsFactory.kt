@@ -1,6 +1,8 @@
 package com.guelmus.android.notekeeper
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 
@@ -44,6 +46,16 @@ class AppWidgetRemoteViewsFactory(val context : Context) :
             val rv = RemoteViews(context.packageName, R.layout.item_note_widget)
             rv.setTextViewText(R.id.note_title, DataManager.notes[position].noteTitle)
 
+            //Provide note position as extras for each specific list item so that
+            // when NoteActivity launches, it will know what note to display.
+            val extras  = Bundle()
+            extras.putInt(NOTE_POSITION, position)
+            val fillIntent = Intent()
+            fillIntent.putExtras(extras)
+
+            //Add fillIntent to finish out the template upon widget's item click. The template
+            // is set up to launch NoteActivity with a back stack as well as note position extra.
+            rv.setOnClickFillInIntent(R.id.widget_item, fillIntent)
             return  rv
         }
 

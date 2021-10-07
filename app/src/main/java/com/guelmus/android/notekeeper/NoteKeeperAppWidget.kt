@@ -64,6 +64,14 @@ class NoteKeeperAppWidget : AppWidgetProvider() {
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
 
+            //Launch the app from a widget via deeplink also generate a back stack
+            val intent = Intent(context, NoteActivity::class.java)
+            val pendingIntent = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(intent)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            views.setPendingIntentTemplate(R.id.notes_list, pendingIntent)
+
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
 
