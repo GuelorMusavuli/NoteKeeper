@@ -177,6 +177,7 @@ class NoteActivity : AppCompatActivity() {
         note.noteTitle = textNoteTitle.text.toString()
         note.noteContent = textNoteText.text.toString()
         note.course = spinnerCourses.selectedItem as CourseInfo
+        NoteKeeperAppWidget.sendRefreshBroadcast(this)
     }
 
 }

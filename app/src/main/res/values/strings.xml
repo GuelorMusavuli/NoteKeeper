@@ -28,6 +28,9 @@
     <string name="delete">Delete</string>
     <string name="note">Note</string>
     <string name="comments">Comments</string>
+    <string name="appwidget_text" translatable="false">NOTES</string>
+    <string name="add_widget" translatable="false">Add widget</string>
+    <string name="app_widget_description" translatable="false">This is an app widget description</string>
 
 
 </resources>
